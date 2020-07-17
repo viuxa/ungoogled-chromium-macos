@@ -7,6 +7,8 @@ _download_cache="$_root_dir/build/download_cache"
 _src_dir="$_root_dir/build/src"
 _main_repo="$_root_dir/ungoogled-chromium"
 
+export CHROMIUM_BUILDTOOLS_PATH=$_src_dir/third_party/llvm-build/Release+Asserts
+
 # For packaging
 _chromium_version=$(cat $_root_dir/ungoogled-chromium/chromium_version.txt)
 _ungoogled_revision=$(cat $_root_dir/ungoogled-chromium/revision.txt)
@@ -24,6 +26,7 @@ mkdir -p "$_download_cache"
 cp "$_main_repo/flags.gn" "$_src_dir/out/Default/args.gn"
 cat "$_root_dir/flags.macos.gn" >> "$_src_dir/out/Default/args.gn"
 
+cd "$_src_dir/third_party/llvm-build/Release+Asserts/" && ln -sv bin mac
 cd "$_src_dir"
 
 ./tools/gn/bootstrap/bootstrap.py -o out/Default/gn --skip-generate-buildfiles
