@@ -21,6 +21,11 @@ on:
       - '!LICENSE'
       - '!devutils/**'
   workflow_dispatch:
+    inputs:
+      name:
+        description: 'Manual run by'
+        required: true
+        default: ${{ github.repository_owner }}
 # alternatively use on.push.branches: release/*
 
 jobs:
