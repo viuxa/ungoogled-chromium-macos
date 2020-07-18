@@ -10,6 +10,9 @@ if [[ -f "$_root_dir/build_finished.log" ]] ; then
   _ungoogled_revision=$(cat $_root_dir/ungoogled-chromium/revision.txt)
   _package_revision=$(cat $_root_dir/revision.txt)
 
+  _file_name="ungoogled-chromium_${_chromium_version}-${_ungoogled_revision}.${_package_revision}_macos.dmg"
+  _release_tag_version="${_chromium_version}-${_ungoogled_revision}"
+  
   cd "$_src_dir"
 
   xattr -csr out/Default/Chromium.app
@@ -18,14 +21,19 @@ if [[ -f "$_root_dir/build_finished.log" ]] ; then
 
   chrome/installer/mac/pkg-dmg \
     --sourcefile --source out/Default/Chromium.app \
-    --target "$_root_dir/build/ungoogled-chromium_${_chromium_version}-${_ungoogled_revision}.${_package_revision}_macos.dmg" \
+    --target "$_root_dir/$_file_name" \
     --volname Chromium --symlink /Applications:/Applications \
     --format UDBZ --verbosity 2
 
   cd "$_root_dir"
-  mv -vn ./build/*.dmg ./
-  sha256sum ./*.dmg | tee ./sums.txt
+  sha256sum ./$_file_name | tee ./sums.txt
+  _sha256sum=$(awk '{print $1;exit 0}' ./sums.txt)
 
+  echo "::set-output name=file_name::$_file_name"
+  echo "::set-output name=release_tag_version::$_release_tag_version"
+
+  printf '`sha256sum` for diskimage `%s`: \n\n```\n%s\n```\n\n' "$_file_name" "$_sha256sum" | tee -a ./github_release_text.md
+  printf 'See [this GitHub Actions Run](https://github.com/%s/actions/runs/%s) for the Workflow files used as well as the build logs and artifacts\n' "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" | tee -a ./github_release_text.md
 else
 
   if ! hdiutil detach -verbose "$_src_dir" ; then
