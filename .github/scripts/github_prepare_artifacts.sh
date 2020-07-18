@@ -11,7 +11,7 @@ if [[ -f "$_root_dir/build_finished.log" ]] ; then
   _package_revision=$(cat $_root_dir/revision.txt)
 
   _file_name="ungoogled-chromium_${_chromium_version}-${_ungoogled_revision}.${_package_revision}_macos.dmg"
-  _release_tag_version="${_chromium_version}-${_ungoogled_revision}"
+  _release_tag_version="${_chromium_version}-${_ungoogled_revision}.${_package_revision}"
   
   cd "$_src_dir"
 
