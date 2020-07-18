@@ -32,8 +32,11 @@ if [[ -f "$_root_dir/build_finished.log" ]] ; then
   echo "::set-output name=file_name::$_file_name"
   echo "::set-output name=release_tag_version::$_release_tag_version"
 
+  _gh_run_href="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+  _gh_wf_href="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+
   printf '`sha256sum` for diskimage `%s`: \n\n```\n%s\n```\n\n' "$_file_name" "$_sha256sum" | tee -a ./github_release_text.md
-  printf 'See [this GitHub Actions Run](https://github.com/%s/actions/runs/%s) for the Workflow files used as well as the build logs and artifacts\n' "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" | tee -a ./github_release_text.md
+  printf 'See [this GitHub Actions Run](%s) for the [Workflow file](%s/workflow) used as well as the build logs and artifacts\n' $_gh_wf_href $_gh_run_href | tee -a ./github_release_text.md
 else
 
   if ! hdiutil detach -verbose "$_src_dir" ; then
