@@ -1,5 +1,11 @@
 name: Build macOS binaries of Ungoogled Chromium
-on: 
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Manual run by'
+        required: true
+        default: ${{ github.repository_owner }}
   push:
     paths:
       - 'patches/**'
@@ -20,12 +26,6 @@ on:
       - '!README.md'
       - '!LICENSE'
       - '!devutils/**'
-  workflow_dispatch:
-    inputs:
-      name:
-        description: 'Manual run by'
-        required: true
-        default: ${{ github.repository_owner }}
 # alternatively use on.push.branches: release/*
 
 jobs:
