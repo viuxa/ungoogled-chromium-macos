@@ -1,4 +1,4 @@
-name: Build macOS binaries of Ungoogled Chromium
+name: Manual trigger, Build macOS binaries of Ungoogled Chromium
 on:
   workflow_dispatch:
     inputs:
@@ -6,27 +6,6 @@ on:
         description: 'Manual run by'
         required: true
         default: ${{ github.repository_owner }}
-  push:
-    paths:
-      - 'patches/**'
-      - 'downloads.ini'
-      - 'revision.txt'
-      - 'flags.macos.gn'
-      - '!build.sh'
-      - '!README.md'
-      - '!LICENSE'
-      - '!devutils/**'
-  pull_request:
-    paths:
-      - 'patches/**'
-      - 'downloads.ini'
-      - 'revision.txt'
-      - 'flags.macos.gn'
-      - '!build.sh'
-      - '!README.md'
-      - '!LICENSE'
-      - '!devutils/**'
-# alternatively use on.push.branches: release/*
 
 jobs:
   build_job_01:
