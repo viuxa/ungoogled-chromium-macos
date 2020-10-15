@@ -288,15 +288,21 @@
  
 --- a/chrome/browser/extensions/api/safe_browsing_private/safe_browsing_private_event_router.cc
 +++ b/chrome/browser/extensions/api/safe_browsing_private/safe_browsing_private_event_router.cc
-@@ -492,6 +492,7 @@ void SafeBrowsingPrivateEventRouter::OnS
+@@ -491,7 +491,9 @@ void SafeBrowsingPrivateEventRouter::OnS
+ #if defined(FULL_SAFE_BROWSING)
    if (!IsRealtimeReportingEnabled())
      return;
++#endif // FULL_SAFE_BROWSING
  
 +#if BUILDFLAG(FULL_SAFE_BROWSING)
    ReportRealtimeEvent(
        kKeySensitiveDataEvent,
        base::BindOnce(
-@@ -547,6 +548,7 @@ void SafeBrowsingPrivateEventRouter::OnA
+@@ -544,9 +546,11 @@ void SafeBrowsingPrivateEventRouter::OnA
+ #if defined(FULL_SAFE_BROWSING)
+   if (!IsRealtimeReportingEnabled())
+     return;
++#endif // FULL_SAFE_BROWSING
  
    DCHECK_EQ("dlp", result.tag);
  
@@ -306,7 +312,7 @@
        base::BindOnce(
 --- a/chrome/browser/ui/views/download/download_item_view.cc
 +++ b/chrome/browser/ui/views/download/download_item_view.cc
-@@ -998,11 +998,14 @@ ui::ImageModel DownloadItemView::GetIcon
+@@ -998,11 +998,13 @@ ui::ImageModel DownloadItemView::GetIcon
    const auto danger_type = model_->GetDangerType();
    switch (danger_type) {
      case download::DOWNLOAD_DANGER_TYPE_UNCOMMON_CONTENT:
@@ -317,7 +323,6 @@
                   ? kWarning
                   : kError;
 +#endif
-+      return kError;
      case download::DOWNLOAD_DANGER_TYPE_DANGEROUS_URL:
      case download::DOWNLOAD_DANGER_TYPE_DANGEROUS_CONTENT:
      case download::DOWNLOAD_DANGER_TYPE_DANGEROUS_HOST:
