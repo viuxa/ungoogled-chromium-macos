@@ -257,18 +257,3 @@
      case download::DOWNLOAD_DANGER_TYPE_DANGEROUS_URL:
      case download::DOWNLOAD_DANGER_TYPE_DANGEROUS_CONTENT:
      case download::DOWNLOAD_DANGER_TYPE_DANGEROUS_HOST:
---- a/chrome/browser/chrome_content_browser_client.cc
-+++ b/chrome/browser/chrome_content_browser_client.cc
-@@ -5335,10 +5335,12 @@ ChromeContentBrowserClient::GetUrlLookup
-   }
- #endif
- 
-+#if BUILDFLAG(FULL_SAFE_BROWSING)
-   if (is_consumer_lookup_enabled) {
-     return safe_browsing::RealTimeUrlLookupServiceFactory::GetForProfile(
-         profile);
-   }
-+#endif // BUILDFLAG(FULL_SAFE_BROWSING)
-   return nullptr;
- }
- 
