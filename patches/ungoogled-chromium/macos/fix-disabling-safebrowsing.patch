@@ -10,7 +10,7 @@
    ]
  
    public_deps = [
-@@ -2000,7 +1999,6 @@ static_library("browser") {
+@@ -1999,7 +1998,6 @@ static_library("browser") {
      "//chrome/browser/push_messaging:budget_proto",
      "//chrome/browser/resource_coordinator:mojo_bindings",
      "//chrome/browser/resource_coordinator:tab_manager_features",
