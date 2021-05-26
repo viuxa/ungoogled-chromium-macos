@@ -12,6 +12,9 @@ _chromium_version=$(cat $_root_dir/ungoogled-chromium/chromium_version.txt)
 _ungoogled_revision=$(cat $_root_dir/ungoogled-chromium/revision.txt)
 _package_revision=$(cat $_root_dir/revision.txt)
 
+# Add local clang and build tools to PATH
+export PATH="$PATH:$_src_dir/third_party/llvm-build/Release+Asserts/bin"
+
 rm -rf "$_src_dir/out" || true
 mkdir -p "$_src_dir/out/Default"
 mkdir -p "$_download_cache"
@@ -25,6 +28,9 @@ cp "$_main_repo/flags.gn" "$_src_dir/out/Default/args.gn"
 cat "$_root_dir/flags.macos.gn" >> "$_src_dir/out/Default/args.gn"
 
 cd "$_src_dir"
+
+# dsymutilpath fix
+ln -sv "$_src_dir/third_party/llvm-build/Release+Asserts/bin" "$_src_dir/tools/clang/dsymutil/bin"
 
 ./tools/gn/bootstrap/bootstrap.py -o out/Default/gn --skip-generate-buildfiles
 ./out/Default/gn gen out/Default --fail-on-unused-args
