@@ -1,8 +1,10 @@
 description: fix mojo layout test build error
 author: Michael Gilbert <mgilbert@debian.org>
 
---- a/content/shell/BUILD.gn
-+++ b/content/shell/BUILD.gn
+Index: src/content/shell/BUILD.gn
+===================================================================
+--- src.orig/content/shell/BUILD.gn
++++ src/content/shell/BUILD.gn
 @@ -240,7 +240,6 @@ static_library("content_shell_lib") {
      "//content:dev_ui_content_resources",
      "//content/app/resources",
