@@ -1,9 +1,7 @@
 # Fix compiling on macOS
 
-Index: src/tools/gn/src/gn/visibility.cc
-===================================================================
---- src.orig/tools/gn/src/gn/visibility.cc
-+++ src/tools/gn/src/gn/visibility.cc
+--- a/tools/gn/src/gn/visibility.cc
++++ b/tools/gn/src/gn/visibility.cc
 @@ -80,7 +80,7 @@ std::string Visibility::Describe(int ind
    return result;
  }
@@ -13,10 +11,8 @@ Index: src/tools/gn/src/gn/visibility.cc
    auto res = std::make_unique<base::ListValue>();
    for (const auto& pattern : patterns_)
      res->AppendString(pattern.Describe());
-Index: src/tools/gn/src/gn/visibility.h
-===================================================================
---- src.orig/tools/gn/src/gn/visibility.h
-+++ src/tools/gn/src/gn/visibility.h
+--- a/tools/gn/src/gn/visibility.h
++++ b/tools/gn/src/gn/visibility.h
 @@ -10,6 +10,7 @@
  #include <vector>
  

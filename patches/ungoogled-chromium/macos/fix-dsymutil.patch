@@ -1,7 +1,5 @@
-Index: src/tools/mac/dump-static-initializers.py
-===================================================================
---- src.orig/tools/mac/dump-static-initializers.py
-+++ src/tools/mac/dump-static-initializers.py
+--- a/tools/mac/dump-static-initializers.py
++++ b/tools/mac/dump-static-initializers.py
 @@ -41,7 +41,7 @@ def ParseDsymutil(binary):
    static initializers.
    """
