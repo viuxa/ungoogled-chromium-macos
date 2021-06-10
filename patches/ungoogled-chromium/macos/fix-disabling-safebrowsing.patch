@@ -1,9 +1,7 @@
 # Fix GN safe_browsing and building with safebrowsing disabled on macOS
 
-Index: src/chrome/browser/BUILD.gn
-===================================================================
---- src.orig/chrome/browser/BUILD.gn
-+++ src/chrome/browser/BUILD.gn
+--- a/chrome/browser/BUILD.gn
++++ b/chrome/browser/BUILD.gn
 @@ -1858,10 +1858,6 @@ static_library("browser") {
      "//chrome/browser/profiling_host",
      "//chrome/browser/ui",
@@ -23,10 +21,8 @@ Index: src/chrome/browser/BUILD.gn
      "//chrome/browser/safe_browsing:advanced_protection",
      "//chrome/browser/safe_browsing:metrics_collector",
      "//chrome/browser/safe_browsing:verdict_cache_manager_factory",
-Index: src/chrome/browser/extensions/BUILD.gn
-===================================================================
---- src.orig/chrome/browser/extensions/BUILD.gn
-+++ src/chrome/browser/extensions/BUILD.gn
+--- a/chrome/browser/extensions/BUILD.gn
++++ b/chrome/browser/extensions/BUILD.gn
 @@ -751,9 +751,6 @@ static_library("extensions") {
  
      # TODO(crbug.com/1065748): Remove this circular dependency.
@@ -46,16 +42,15 @@ Index: src/chrome/browser/extensions/BUILD.gn
      "//components/signin/core/browser",
      "//components/translate/content/browser",
      "//content/public/browser",
-@@ -799,8 +794,6 @@ static_library("extensions") {
+@@ -799,7 +794,6 @@ static_library("extensions") {
      "//chrome/browser/profiles:profile",
      "//chrome/browser/resource_coordinator:intervention_policy_database_proto",
      "//chrome/browser/resource_coordinator:mojo_bindings",
 -    "//chrome/browser/safe_browsing",
--    "//chrome/browser/safe_browsing:metrics_collector",
+     "//chrome/browser/safe_browsing:metrics_collector",
      "//chrome/browser/web_applications",
      "//chrome/browser/web_applications/components",
-     "//components/site_engagement/core/mojom:mojo_bindings",
-@@ -856,12 +849,6 @@ static_library("extensions") {
+@@ -856,12 +850,6 @@ static_library("extensions") {
      "//components/privacy_sandbox:privacy_sandbox_prefs",
      "//components/proxy_config",
      "//components/resources",
@@ -68,10 +63,8 @@ Index: src/chrome/browser/extensions/BUILD.gn
      "//components/search_engines",
      "//components/services/app_service/public/mojom",
      "//components/services/patch/content",
-Index: src/chrome/browser/ui/BUILD.gn
-===================================================================
---- src.orig/chrome/browser/ui/BUILD.gn
-+++ src/chrome/browser/ui/BUILD.gn
+--- a/chrome/browser/ui/BUILD.gn
++++ b/chrome/browser/ui/BUILD.gn
 @@ -320,13 +320,6 @@ static_library("ui") {
      ]
    }
@@ -160,10 +153,8 @@ Index: src/chrome/browser/ui/BUILD.gn
    if (use_dbus) {
      deps += [ "//dbus" ]
    }
-Index: src/chrome/browser/ui/browser.cc
-===================================================================
---- src.orig/chrome/browser/ui/browser.cc
-+++ src/chrome/browser/ui/browser.cc
+--- a/chrome/browser/ui/browser.cc
++++ b/chrome/browser/ui/browser.cc
 @@ -1451,10 +1451,10 @@ void Browser::OnDidBlockNavigation(
        framebust_helper->AddBlockedUrl(blocked_url, base::BindOnce(on_click));
      }
@@ -179,10 +170,8 @@ Index: src/chrome/browser/ui/browser.cc
  }
  
  content::PictureInPictureResult Browser::EnterPictureInPicture(
-Index: src/chrome/browser/safe_browsing/download_protection/download_protection_service.cc
-===================================================================
---- src.orig/chrome/browser/safe_browsing/download_protection/download_protection_service.cc
-+++ src/chrome/browser/safe_browsing/download_protection/download_protection_service.cc
+--- a/chrome/browser/safe_browsing/download_protection/download_protection_service.cc
++++ b/chrome/browser/safe_browsing/download_protection/download_protection_service.cc
 @@ -364,8 +364,12 @@ void DownloadProtectionService::ShowDeta
    Profile* profile = Profile::FromBrowserContext(
        content::DownloadItemUtils::GetBrowserContext(item));
@@ -196,10 +185,8 @@ Index: src/chrome/browser/safe_browsing/download_protection/download_protection_
        item->GetDangerType() ==
            download::DOWNLOAD_DANGER_TYPE_UNCOMMON_CONTENT) {
      learn_more_url = GURL(chrome::kAdvancedProtectionDownloadLearnMoreURL);
-Index: src/chrome/browser/download/notification/download_item_notification.cc
-===================================================================
---- src.orig/chrome/browser/download/notification/download_item_notification.cc
-+++ src/chrome/browser/download/notification/download_item_notification.cc
+--- a/chrome/browser/download/notification/download_item_notification.cc
++++ b/chrome/browser/download/notification/download_item_notification.cc
 @@ -860,9 +860,13 @@ std::u16string DownloadItemNotification:
      }
      case download::DOWNLOAD_DANGER_TYPE_UNCOMMON_CONTENT: {
@@ -214,10 +201,33 @@ Index: src/chrome/browser/download/notification/download_item_notification.cc
        return l10n_util::GetStringFUTF16(
            requests_ap_verdicts
                ? IDS_PROMPT_UNCOMMON_DOWNLOAD_CONTENT_IN_ADVANCED_PROTECTION
-Index: src/chrome/browser/ui/views/download/download_danger_prompt_views.cc
-===================================================================
---- src.orig/chrome/browser/ui/views/download/download_danger_prompt_views.cc
-+++ src/chrome/browser/ui/views/download/download_danger_prompt_views.cc
+--- a/chrome/browser/ui/webui/downloads/downloads_ui.cc
++++ b/chrome/browser/ui/webui/downloads/downloads_ui.cc
+@@ -37,6 +37,7 @@
+ #include "chrome/grit/theme_resources.h"
+ #include "components/prefs/pref_service.h"
+ #include "components/profile_metrics/browser_profile_type.h"
++#include "components/safe_browsing/buildflags.h"
+ #include "content/public/browser/download_manager.h"
+ #include "content/public/browser/url_data_source.h"
+ #include "content/public/browser/web_contents.h"
+@@ -63,10 +64,12 @@ content::WebUIDataSource* CreateDownload
+       source, base::make_span(kDownloadsResources, kDownloadsResourcesSize),
+       IDR_DOWNLOADS_DOWNLOADS_HTML);
+ 
+-  bool requests_ap_verdicts =
+-      safe_browsing::AdvancedProtectionStatusManagerFactory::GetForProfile(
++  bool requests_ap_verdicts = false;
++#if BUILDFLAG(FULL_SAFE_BROWSING)
++      requests_ap_verdicts = safe_browsing::AdvancedProtectionStatusManagerFactory::GetForProfile(
+           profile)
+           ->IsUnderAdvancedProtection();
++#endif
+   source->AddBoolean("requestsApVerdicts", requests_ap_verdicts);
+ 
+   static constexpr webui::LocalizedString kStrings[] = {
+--- a/chrome/browser/ui/views/download/download_danger_prompt_views.cc
++++ b/chrome/browser/ui/views/download/download_danger_prompt_views.cc
 @@ -198,17 +198,18 @@ std::u16string DownloadDangerPromptViews
              download_->GetFileNameToReportUser().LossyDisplayName());
        }
@@ -239,10 +249,8 @@ Index: src/chrome/browser/ui/views/download/download_danger_prompt_views.cc
        }
        case download::DOWNLOAD_DANGER_TYPE_POTENTIALLY_UNWANTED: {
          return l10n_util::GetStringFUTF16(
-Index: src/chrome/browser/ui/views/download/download_item_view.cc
-===================================================================
---- src.orig/chrome/browser/ui/views/download/download_item_view.cc
-+++ src/chrome/browser/ui/views/download/download_item_view.cc
+--- a/chrome/browser/ui/views/download/download_item_view.cc
++++ b/chrome/browser/ui/views/download/download_item_view.cc
 @@ -1004,11 +1004,13 @@ ui::ImageModel DownloadItemView::GetIcon
    const auto danger_type = model_->GetDangerType();
    switch (danger_type) {

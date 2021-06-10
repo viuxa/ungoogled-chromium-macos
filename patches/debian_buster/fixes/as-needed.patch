@@ -1,10 +1,8 @@
 description: some libraries fail to link when --as-needed is set
 author: Michael Gilbert <mgilbert@debian.org>
 
-Index: src/build/config/compiler/BUILD.gn
-===================================================================
---- src.orig/build/config/compiler/BUILD.gn
-+++ src/build/config/compiler/BUILD.gn
+--- a/build/config/compiler/BUILD.gn
++++ b/build/config/compiler/BUILD.gn
 @@ -431,7 +431,7 @@ config("compiler") {
      if (!using_sanitizer) {
        ldflags += [

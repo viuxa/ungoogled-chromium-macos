@@ -14,10 +14,8 @@ Index: src/ui/gfx/ipc/buffer_types/gfx_param_traits.cc
  }
  
  }  // namespace IPC
-Index: src/content/browser/web_package/signed_exchange_handler.cc
-===================================================================
---- src.orig/content/browser/web_package/signed_exchange_handler.cc
-+++ src/content/browser/web_package/signed_exchange_handler.cc
+--- a/content/browser/web_package/signed_exchange_handler.cc
++++ b/content/browser/web_package/signed_exchange_handler.cc
 @@ -613,7 +613,7 @@ void SignedExchangeHandler::OnVerifyCert
        error_message = base::StringPrintf(
            "CT verification failed. result: %s, policy compliance: %d",
