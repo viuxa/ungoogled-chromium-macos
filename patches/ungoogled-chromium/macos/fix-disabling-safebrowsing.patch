@@ -258,13 +258,13 @@
      case download::DOWNLOAD_DANGER_TYPE_DANGEROUS_CONTENT:
      case download::DOWNLOAD_DANGER_TYPE_DANGEROUS_HOST:
 --- a/chrome/utility/safe_browsing/mac/BUILD.gn
-+++ b/chrome/utility/safe_browsing/mac/BUILD.gn.dist
++++ b/chrome/utility/safe_browsing/mac/BUILD.gn
 @@ -15,6 +15,8 @@ source_set("mac") {
    deps = [
      ":dmg_common",
      "//base",
-+    "//chrome/common/safe_browsing:archive_analyzer_results",
-+    "//chrome/common/safe_browsing:binary_feature_extractor",
+-    "//chrome/common/safe_browsing:archive_analyzer_results",
+-    "//chrome/common/safe_browsing:binary_feature_extractor",
      "//components/safe_browsing/core:csd_proto",
    ]
  }
