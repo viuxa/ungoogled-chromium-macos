@@ -1,0 +1,13 @@
+diff --git a/config/mac/mac_sdk.gni.dist b/config/mac/mac_sdk.gni
+index 19aa066..5f6530c 100644
+--- a/config/mac/mac_sdk.gni.dist
++++ b/config/mac/mac_sdk.gni
+@@ -18,7 +18,7 @@ declare_args() {
+   # additional code changes are required to be compliant with the availability
+   # rules.
+   # Must be of the form x.x.x for Info.plist files.
+-  mac_deployment_target = "10.11.0"
++  mac_deployment_target = "10.14.0"
+ 
+   # The value of the LSMinimmumSystemVersion in Info.plist files. This partially
+   # controls the minimum supported version of macOS for Chromium by
