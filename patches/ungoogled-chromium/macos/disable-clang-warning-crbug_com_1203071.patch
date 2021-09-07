@@ -1,0 +1,15 @@
+diff --git a/build/config/compiler/BUILD.gn.dist b/build/config/compiler/BUILD.gn
+index 5f91745..dfe9e0e 100644
+--- a/build/config/compiler/BUILD.gn.dist
++++ b/build/config/compiler/BUILD.gn
+@@ -1622,8 +1622,8 @@ config("default_warnings") {
+           "-Wno-non-c-typedef-for-linkage",
+ 
+           # TODO(https://crbug.com/1203071): Clean up and enable.
+-          "-Wno-unused-but-set-parameter",
+-          "-Wno-unused-but-set-variable",
++          # "-Wno-unused-but-set-parameter",
++          # "-Wno-unused-but-set-variable",
+         ]
+ 
+         cflags_c += [
