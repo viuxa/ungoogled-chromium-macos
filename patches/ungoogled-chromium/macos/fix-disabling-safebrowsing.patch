@@ -255,3 +255,17 @@
      "//components/safe_browsing/core/common/proto:csd_proto",
    ]
  }
+diff --git a/chrome/test/BUILD.gn.dist b/chrome/test/BUILD.gn
+index f952856..843f9d3 100644
+--- a/chrome/test/BUILD.gn.dist
++++ b/chrome/test/BUILD.gn
+@@ -5266,9 +5266,6 @@ test("unit_tests") {
+       "//chrome/browser/apps/app_shim",
+       "//chrome/browser/ui/cocoa/notifications:common",
+       "//chrome/common/notifications",
+-      "//chrome/common/safe_browsing:archive_analyzer_results",
+-      "//chrome/common/safe_browsing:disk_image_type_sniffer_mac",
+-      "//chrome/services/mac_notifications:unit_tests",
+       "//chrome/services/mac_notifications/public/cpp",
+       "//chrome/services/mac_notifications/public/mojom",
+       "//chrome/utility/safe_browsing/mac",
