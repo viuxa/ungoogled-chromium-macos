@@ -1,7 +1,5 @@
-diff --git a/config/mac/mac_sdk.gni.dist b/config/mac/mac_sdk.gni
-index 19aa066..5f6530c 100644
---- a/config/mac/mac_sdk.gni
-+++ b/config/mac/mac_sdk.gni
+--- a/build/config/mac/mac_sdk.gni
++++ b/build/config/mac/mac_sdk.gni
 @@ -18,7 +18,7 @@ declare_args() {
    # additional code changes are required to be compliant with the availability
    # rules.
