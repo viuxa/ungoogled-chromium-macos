@@ -255,9 +255,7 @@
      "//components/safe_browsing/core/common/proto:csd_proto",
    ]
  }
-diff --git a/chrome/test/BUILD.gn.dist b/chrome/test/BUILD.gn
-index f952856..843f9d3 100644
---- a/chrome/test/BUILD.gn.dist
+--- a/chrome/test/BUILD.gn
 +++ b/chrome/test/BUILD.gn
 @@ -5266,9 +5266,6 @@ test("unit_tests") {
        "//chrome/browser/apps/app_shim",
