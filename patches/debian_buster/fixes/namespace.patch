@@ -1,8 +1,10 @@
 description: jumbo build has trouble with these namespaces
 author: Michael Gilbert <mgilbert@debian.org>
 
---- a/chrome/browser/apps/platform_apps/api/sync_file_system/extension_sync_event_observer.h
-+++ b/chrome/browser/apps/platform_apps/api/sync_file_system/extension_sync_event_observer.h
+Index: src/chrome/browser/apps/platform_apps/api/sync_file_system/extension_sync_event_observer.h
+===================================================================
+--- src.orig/chrome/browser/apps/platform_apps/api/sync_file_system/extension_sync_event_observer.h
++++ src/chrome/browser/apps/platform_apps/api/sync_file_system/extension_sync_event_observer.h
 @@ -82,8 +82,10 @@ class ExtensionSyncEventObserver : publi
  }  // namespace api
  }  // namespace chrome_apps

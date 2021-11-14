@@ -1,8 +1,10 @@
 description: fix int-in-bool-context gcc warnings
 author: Michael Gilbert <mgilbert@debian.org>
 
---- a/third_party/webrtc/modules/video_processing/video_denoiser.cc
-+++ b/third_party/webrtc/modules/video_processing/video_denoiser.cc
+Index: src/third_party/webrtc/modules/video_processing/video_denoiser.cc
+===================================================================
+--- src.orig/third_party/webrtc/modules/video_processing/video_denoiser.cc
++++ src/third_party/webrtc/modules/video_processing/video_denoiser.cc
 @@ -180,7 +180,7 @@ void VideoDenoiser::CopySrcOnMOB(const u
        // artifacts.
        if (mb_filter_decision_[mb_index] != FILTER_BLOCK ||
@@ -12,9 +14,11 @@ author: Michael Gilbert <mgilbert@debian.org>
             moving_object_[mb_row * mb_cols_ + mb_col])) {
          // Copy y source.
          libyuv::CopyPlane(mb_src, stride_src, mb_dst, stride_dst, 16, 16);
---- a/content/browser/renderer_host/render_widget_host_view_base.cc
-+++ b/content/browser/renderer_host/render_widget_host_view_base.cc
-@@ -325,15 +325,16 @@ void RenderWidgetHostViewBase::SetBackgr
+Index: src/content/browser/renderer_host/render_widget_host_view_base.cc
+===================================================================
+--- src.orig/content/browser/renderer_host/render_widget_host_view_base.cc
++++ src/content/browser/renderer_host/render_widget_host_view_base.cc
+@@ -321,15 +321,16 @@ void RenderWidgetHostViewBase::SetBackgr
    if (default_background_color_ == color)
      return;
  
@@ -37,9 +41,11 @@ author: Michael Gilbert <mgilbert@debian.org>
      }
    }
  }
---- a/third_party/blink/renderer/core/html/parser/html_tree_builder.cc
-+++ b/third_party/blink/renderer/core/html/parser/html_tree_builder.cc
-@@ -1076,7 +1076,7 @@ void HTMLTreeBuilder::ProcessStartTagFor
+Index: src/third_party/blink/renderer/core/html/parser/html_tree_builder.cc
+===================================================================
+--- src.orig/third_party/blink/renderer/core/html/parser/html_tree_builder.cc
++++ src/third_party/blink/renderer/core/html/parser/html_tree_builder.cc
+@@ -1070,7 +1070,7 @@ void HTMLTreeBuilder::ProcessStartTagFor
    }
    if (token->GetName() == html_names::kColTag) {
      ProcessFakeStartTag(html_names::kColgroupTag);

@@ -1,8 +1,10 @@
 description: cast enums to int for use as printf arguments
 author: Michael Gilbert <mgilbert@debian.org>
 
---- a/ui/gfx/ipc/buffer_types/gfx_param_traits.cc
-+++ b/ui/gfx/ipc/buffer_types/gfx_param_traits.cc
+Index: src/ui/gfx/ipc/buffer_types/gfx_param_traits.cc
+===================================================================
+--- src.orig/ui/gfx/ipc/buffer_types/gfx_param_traits.cc
++++ src/ui/gfx/ipc/buffer_types/gfx_param_traits.cc
 @@ -32,7 +32,7 @@ bool ParamTraits<gfx::BufferUsageAndForm
  void ParamTraits<gfx::BufferUsageAndFormat>::Log(
      const gfx::BufferUsageAndFormat& p,
@@ -12,8 +14,10 @@ author: Michael Gilbert <mgilbert@debian.org>
  }
  
  }  // namespace IPC
---- a/content/browser/web_package/signed_exchange_handler.cc
-+++ b/content/browser/web_package/signed_exchange_handler.cc
+Index: src/content/browser/web_package/signed_exchange_handler.cc
+===================================================================
+--- src.orig/content/browser/web_package/signed_exchange_handler.cc
++++ src/content/browser/web_package/signed_exchange_handler.cc
 @@ -613,7 +613,7 @@ void SignedExchangeHandler::OnVerifyCert
        error_message = base::StringPrintf(
            "CT verification failed. result: %s, policy compliance: %d",
@@ -23,9 +27,11 @@ author: Michael Gilbert <mgilbert@debian.org>
        result = SignedExchangeLoadResult::kCTVerificationError;
      } else {
        error_message =
---- a/third_party/blink/renderer/modules/cache_storage/inspector_cache_storage_agent.cc
-+++ b/third_party/blink/renderer/modules/cache_storage/inspector_cache_storage_agent.cc
-@@ -459,7 +459,7 @@ class CachedResponseFileReaderLoaderClie
+Index: src/third_party/blink/renderer/modules/cache_storage/inspector_cache_storage_agent.cc
+===================================================================
+--- src.orig/third_party/blink/renderer/modules/cache_storage/inspector_cache_storage_agent.cc
++++ src/third_party/blink/renderer/modules/cache_storage/inspector_cache_storage_agent.cc
+@@ -467,7 +467,7 @@ class CachedResponseFileReaderLoaderClie
    void DidFail(FileErrorCode error) override {
      callback_->sendFailure(ProtocolResponse::ServerError(
          String::Format("Unable to read the cached response, error code: %d",

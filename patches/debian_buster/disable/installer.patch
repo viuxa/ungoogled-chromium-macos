@@ -1,9 +1,11 @@
 description: avoid building chromium's installer, which is unused in debian
 author: Michael Gilbert <mgilbert@debian.org>
 
---- a/BUILD.gn
-+++ b/BUILD.gn
-@@ -76,8 +76,6 @@ group("gn_all") {
+Index: src/BUILD.gn
+===================================================================
+--- src.orig/BUILD.gn
++++ src/BUILD.gn
+@@ -79,8 +79,6 @@ group("gn_all") {
      ":gn_visibility",
      "//base:base_perftests",
      "//base:base_unittests",

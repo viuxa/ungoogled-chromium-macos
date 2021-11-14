@@ -1,5 +1,7 @@
---- a/third_party/blink/renderer/bindings/scripts/bind_gen/style_format.py
-+++ b/third_party/blink/renderer/bindings/scripts/bind_gen/style_format.py
+Index: src/third_party/blink/renderer/bindings/scripts/bind_gen/style_format.py
+===================================================================
+--- src.orig/third_party/blink/renderer/bindings/scripts/bind_gen/style_format.py
++++ src/third_party/blink/renderer/bindings/scripts/bind_gen/style_format.py
 @@ -42,9 +42,16 @@ def init(root_src_dir, enable_style_form
      buildtools_platform_dir = os.path.join(root_src_dir, "buildtools",
                                             platform)
