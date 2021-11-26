@@ -1,7 +1,5 @@
-Index: src/third_party/node/node.py
-===================================================================
---- src.orig/third_party/node/node.py
-+++ src/third_party/node/node.py
+--- a/third_party/node/node.py
++++ b/third_party/node/node.py
 @@ -11,17 +11,18 @@ import os
  
  

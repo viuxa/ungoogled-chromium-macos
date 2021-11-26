@@ -1,7 +1,5 @@
-Index: src/tools/mac/dump-static-initializers.py
-===================================================================
---- src.orig/tools/mac/dump-static-initializers.py
-+++ src/tools/mac/dump-static-initializers.py
+--- a/tools/mac/dump-static-initializers.py
++++ b/tools/mac/dump-static-initializers.py
 @@ -41,7 +41,7 @@ def ParseDsymutil(binary):
    static initializers.
    """
@@ -11,10 +9,8 @@ Index: src/tools/mac/dump-static-initializers.py
       stdout=subprocess.PIPE)
    for line in child.stdout:
      file_match = dsymutil_file_re.search(line)
-Index: src/build/toolchain/apple/toolchain.gni
-===================================================================
---- src.orig/build/toolchain/apple/toolchain.gni
-+++ src/build/toolchain/apple/toolchain.gni
+--- a/build/toolchain/apple/toolchain.gni
++++ b/build/toolchain/apple/toolchain.gni
 @@ -206,8 +206,9 @@ template("apple_toolchain") {
      if (_enable_dsyms) {
        dsym_switch = " -Wcrl,dsym,{{root_out_dir}} "

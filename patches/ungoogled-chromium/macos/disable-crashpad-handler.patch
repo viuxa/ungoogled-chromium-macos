@@ -1,9 +1,7 @@
 # Disables crashpad_handler process
 
-Index: src/third_party/crashpad/crashpad/client/crashpad_client_mac.cc
-===================================================================
---- src.orig/third_party/crashpad/crashpad/client/crashpad_client_mac.cc
-+++ src/third_party/crashpad/crashpad/client/crashpad_client_mac.cc
+--- a/third_party/crashpad/crashpad/client/crashpad_client_mac.cc
++++ b/third_party/crashpad/crashpad/client/crashpad_client_mac.cc
 @@ -130,61 +130,7 @@ class HandlerStarter final : public Noti
        const std::map<std::string, std::string>& annotations,
        const std::vector<std::string>& arguments,

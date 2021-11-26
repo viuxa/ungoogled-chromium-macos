@@ -1,9 +1,7 @@
 # Fix GN safe_browsing and building with safebrowsing disabled on macOS
 
-Index: src/chrome/browser/BUILD.gn
-===================================================================
---- src.orig/chrome/browser/BUILD.gn
-+++ src/chrome/browser/BUILD.gn
+--- a/chrome/browser/BUILD.gn
++++ b/chrome/browser/BUILD.gn
 @@ -1879,11 +1879,6 @@ static_library("browser") {
      "//chrome/browser/ui",
      "//chrome/browser/ui/webui/bluetooth_internals",
@@ -24,10 +22,8 @@ Index: src/chrome/browser/BUILD.gn
      "//chrome/browser/safe_browsing:advanced_protection",
      "//chrome/browser/safe_browsing:metrics_collector",
      "//chrome/browser/safe_browsing:verdict_cache_manager_factory",
-Index: src/chrome/browser/extensions/BUILD.gn
-===================================================================
---- src.orig/chrome/browser/extensions/BUILD.gn
-+++ src/chrome/browser/extensions/BUILD.gn
+--- a/chrome/browser/extensions/BUILD.gn
++++ b/chrome/browser/extensions/BUILD.gn
 @@ -747,9 +747,6 @@ static_library("extensions") {
  
      # TODO(crbug.com/1065748): Remove this circular dependency.
@@ -68,10 +64,8 @@ Index: src/chrome/browser/extensions/BUILD.gn
      "//components/search_engines",
      "//components/services/app_service/public/mojom",
      "//components/services/patch/content",
-Index: src/chrome/browser/ui/BUILD.gn
-===================================================================
---- src.orig/chrome/browser/ui/BUILD.gn
-+++ src/chrome/browser/ui/BUILD.gn
+--- a/chrome/browser/ui/BUILD.gn
++++ b/chrome/browser/ui/BUILD.gn
 @@ -373,7 +373,6 @@ static_library("ui") {
    public_deps = [
      "//components/dom_distiller/core",
@@ -155,10 +149,8 @@ Index: src/chrome/browser/ui/BUILD.gn
    if (use_dbus) {
      deps += [ "//dbus" ]
    }
-Index: src/chrome/browser/safe_browsing/download_protection/download_protection_service.cc
-===================================================================
---- src.orig/chrome/browser/safe_browsing/download_protection/download_protection_service.cc
-+++ src/chrome/browser/safe_browsing/download_protection/download_protection_service.cc
+--- a/chrome/browser/safe_browsing/download_protection/download_protection_service.cc
++++ b/chrome/browser/safe_browsing/download_protection/download_protection_service.cc
 @@ -419,8 +419,12 @@ void DownloadProtectionService::ShowDeta
    Profile* profile = Profile::FromBrowserContext(
        content::DownloadItemUtils::GetBrowserContext(item));
@@ -172,10 +164,8 @@ Index: src/chrome/browser/safe_browsing/download_protection/download_protection_
        item->GetDangerType() ==
            download::DOWNLOAD_DANGER_TYPE_UNCOMMON_CONTENT) {
      learn_more_url = GURL(chrome::kAdvancedProtectionDownloadLearnMoreURL);
-Index: src/chrome/browser/download/notification/download_item_notification.cc
-===================================================================
---- src.orig/chrome/browser/download/notification/download_item_notification.cc
-+++ src/chrome/browser/download/notification/download_item_notification.cc
+--- a/chrome/browser/download/notification/download_item_notification.cc
++++ b/chrome/browser/download/notification/download_item_notification.cc
 @@ -912,9 +912,13 @@ std::u16string DownloadItemNotification:
      }
      case download::DOWNLOAD_DANGER_TYPE_UNCOMMON_CONTENT: {
@@ -190,10 +180,8 @@ Index: src/chrome/browser/download/notification/download_item_notification.cc
        return l10n_util::GetStringFUTF16(
            requests_ap_verdicts
                ? IDS_PROMPT_UNCOMMON_DOWNLOAD_CONTENT_IN_ADVANCED_PROTECTION
-Index: src/chrome/browser/ui/webui/downloads/downloads_ui.cc
-===================================================================
---- src.orig/chrome/browser/ui/webui/downloads/downloads_ui.cc
-+++ src/chrome/browser/ui/webui/downloads/downloads_ui.cc
+--- a/chrome/browser/ui/webui/downloads/downloads_ui.cc
++++ b/chrome/browser/ui/webui/downloads/downloads_ui.cc
 @@ -37,6 +37,7 @@
  #include "chrome/grit/theme_resources.h"
  #include "components/prefs/pref_service.h"
@@ -217,10 +205,8 @@ Index: src/chrome/browser/ui/webui/downloads/downloads_ui.cc
    source->AddBoolean("requestsApVerdicts", requests_ap_verdicts);
  
    static constexpr webui::LocalizedString kStrings[] = {
-Index: src/chrome/browser/ui/views/download/download_danger_prompt_views.cc
-===================================================================
---- src.orig/chrome/browser/ui/views/download/download_danger_prompt_views.cc
-+++ src/chrome/browser/ui/views/download/download_danger_prompt_views.cc
+--- a/chrome/browser/ui/views/download/download_danger_prompt_views.cc
++++ b/chrome/browser/ui/views/download/download_danger_prompt_views.cc
 @@ -221,17 +221,18 @@ std::u16string DownloadDangerPromptViews
          }
        }
@@ -242,10 +228,8 @@ Index: src/chrome/browser/ui/views/download/download_danger_prompt_views.cc
        }
        case download::DOWNLOAD_DANGER_TYPE_POTENTIALLY_UNWANTED: {
          return l10n_util::GetStringFUTF16(
-Index: src/chrome/browser/ui/views/download/download_item_view.cc
-===================================================================
---- src.orig/chrome/browser/ui/views/download/download_item_view.cc
-+++ src/chrome/browser/ui/views/download/download_item_view.cc
+--- a/chrome/browser/ui/views/download/download_item_view.cc
++++ b/chrome/browser/ui/views/download/download_item_view.cc
 @@ -1122,11 +1122,13 @@ ui::ImageModel DownloadItemView::GetIcon
  
    switch (danger_type) {
@@ -260,10 +244,8 @@ Index: src/chrome/browser/ui/views/download/download_item_view.cc
      case download::DOWNLOAD_DANGER_TYPE_DANGEROUS_URL:
      case download::DOWNLOAD_DANGER_TYPE_DANGEROUS_CONTENT:
      case download::DOWNLOAD_DANGER_TYPE_DANGEROUS_HOST:
-Index: src/chrome/utility/safe_browsing/mac/BUILD.gn
-===================================================================
---- src.orig/chrome/utility/safe_browsing/mac/BUILD.gn
-+++ src/chrome/utility/safe_browsing/mac/BUILD.gn
+--- a/chrome/utility/safe_browsing/mac/BUILD.gn
++++ b/chrome/utility/safe_browsing/mac/BUILD.gn
 @@ -15,8 +15,6 @@ source_set("mac") {
    deps = [
      ":dmg_common",
@@ -273,10 +255,8 @@ Index: src/chrome/utility/safe_browsing/mac/BUILD.gn
      "//components/safe_browsing/core/common/proto:csd_proto",
    ]
  }
-Index: src/chrome/test/BUILD.gn
-===================================================================
---- src.orig/chrome/test/BUILD.gn
-+++ src/chrome/test/BUILD.gn
+--- a/chrome/test/BUILD.gn
++++ b/chrome/test/BUILD.gn
 @@ -5485,9 +5485,6 @@ test("unit_tests") {
        "//chrome/app_shim",
        "//chrome/browser/apps/app_shim",

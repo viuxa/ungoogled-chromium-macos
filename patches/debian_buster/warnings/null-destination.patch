@@ -1,10 +1,8 @@
 description: use stack_buf before possible branching (see gcc bug #83139)
 author: Michael Gilbert <mgilbert@debian.org>
 
-Index: src/base/strings/stringprintf.cc
-===================================================================
---- src.orig/base/strings/stringprintf.cc
-+++ src/base/strings/stringprintf.cc
+--- a/base/strings/stringprintf.cc
++++ b/base/strings/stringprintf.cc
 @@ -67,14 +67,14 @@ static void StringAppendVT(std::basic_st
    int result = vsnprintfT(stack_buf, base::size(stack_buf), format, ap_copy);
    va_end(ap_copy);

@@ -1,6 +1,4 @@
-diff --git a/build/config/compiler/BUILD.gn.orig b/build/config/compiler/BUILD.gn
-index ebccb8b..985de5e 100644
---- a/build/config/compiler/BUILD.gn.orig
+--- a/build/config/compiler/BUILD.gn
 +++ b/build/config/compiler/BUILD.gn
 @@ -1531,7 +1531,7 @@ config("default_warnings") {
              # "-Wno-unused-but-set-variable",

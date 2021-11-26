@@ -1,9 +1,7 @@
 # Disable symbol order verification on macOS since building libc++.a adds extra symbols for some reason
 
-Index: src/chrome/BUILD.gn
-===================================================================
---- src.orig/chrome/BUILD.gn
-+++ src/chrome/BUILD.gn
+--- a/chrome/BUILD.gn
++++ b/chrome/BUILD.gn
 @@ -1195,7 +1195,7 @@ if (is_win) {
  
    # TOOD(crbug/1163903#c8) - thakis@ look into why profile and coverage
