@@ -9,10 +9,11 @@ if [[ -f "$_root_dir/build_finished.log" ]] ; then
   _chromium_version=$(cat $_root_dir/ungoogled-chromium/chromium_version.txt)
   _ungoogled_revision=$(cat $_root_dir/ungoogled-chromium/revision.txt)
   _package_revision=$(cat $_root_dir/revision.txt)
+  _epoch_finish=$(date +%s)
 
   _cpu=x86-64; grep -qF arm64 "$_src_dir/out/Default/args.gn" && _cpu=arm64
   _file_name="ungoogled-chromium_${_chromium_version}-${_ungoogled_revision}.${_package_revision}_${_cpu}-macos.dmg"
-  _release_tag_version="${_chromium_version}-${_ungoogled_revision}.${_package_revision}_${_cpu}"
+  _release_tag_version="${_chromium_version}-${_ungoogled_revision}.${_package_revision}_${_cpu}__${_epoch_finish}"
   
   cd "$_src_dir"
 
