@@ -14,5 +14,4 @@ ungoogled-chromium/macos/fix-visibility.patch
 ungoogled-chromium/macos/fix-dsymutil.patch
 ungoogled-chromium/macos/fix-clang-format-path.patch
 ungoogled-chromium/fix-node-path.patch
-ungoogled-chromium/macos/disable-clang-warning-crbug_com_1255745.patch
 
