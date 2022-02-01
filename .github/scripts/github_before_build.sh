@@ -29,7 +29,10 @@ mkdir -p "$_download_cache"
 "$_main_repo/utils/domain_substitution.py" apply -r "$_main_repo/domain_regex.list" -f "$_main_repo/domain_substitution.list" -c "$_root_dir/build/domsubcache.tar.gz" "$_src_dir"
 
 shopt -s nocasematch
-[[ $GITHUB_REF =~ arm || $(git log --pretty='%s' -1) =~ arm  ]] && echo 'target_cpu = "arm64"' >> "$_root_dir/flags.macos.gn"
+if [[ $GITHUB_REF =~ arm || $(git log --pretty='%s' -1) =~ arm  ]]; then
+  echo 'target_cpu = "arm64"' >> "$_root_dir/flags.macos.gn"
+  sudo xcode-select -s "/Applications/Xcode_12.4.app"
+fi
 
 cp "$_main_repo/flags.gn" "$_src_dir/out/Default/args.gn"
 cat "$_root_dir/flags.macos.gn" >> "$_src_dir/out/Default/args.gn"
