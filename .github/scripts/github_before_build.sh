@@ -31,6 +31,9 @@ mkdir -p "$_download_cache"
 shopt -s nocasematch
 if [[ $GITHUB_REF =~ arm || $(git log --pretty='%s' -1) =~ arm  ]]; then
   echo 'target_cpu = "arm64"' >> "$_root_dir/flags.macos.gn"
+  mv -vn "$_src_dir"/third_party/llvm-build/Release+Asserts/bin/lld{,_13}
+  _lld_build_release="https://github.com/kramred/lld_14/releases/download/1643919744/lld_macOS_x86-64.lz"
+  curl -L "$_lld_build_release" | lzip -vv -d -o "$_src_dir/third_party/llvm-build/Release+Asserts/bin/lld"
   # sudo xcode-select -s "/Applications/Xcode_12.4.app"
 fi
 
