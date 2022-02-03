@@ -400,7 +400,7 @@ jobs:
         with:
             name: github_build_artifact
       - name: Install dependencies
-        run: brew install coreutils ninja zlib
+        run: brew install coreutils lzip ninja
       - name: Unpack archive of build
         run: ./github_unpack_archive.sh
       - name: Resume Build
