@@ -13,5 +13,6 @@ ungoogled-chromium/macos/fix-disabling-safebrowsing.patch
 ungoogled-chromium/macos/fix-visibility.patch
 ungoogled-chromium/macos/fix-dsymutil.patch
 ungoogled-chromium/macos/fix-clang-format-path.patch
+ungoogled-chromium/macos/fix-runTsc-log-info.patch
 ungoogled-chromium/fix-node-path.patch
 
