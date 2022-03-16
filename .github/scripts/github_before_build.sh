@@ -8,8 +8,10 @@ _src_dir="$_root_dir/build/src"
 _main_repo="$_root_dir/ungoogled-chromium"
 
 mkdir -p "$_src_dir"
-hdiutil create -type SPARSEBUNDLE -size 20g -fs APFS -volname build_src -nospotlight -verbose ./build_src.sparsebundle
+hdiutil create -type SPARSEBUNDLE -size 32g -fs APFS -volname build_src -nospotlight -verbose ./build_src.sparsebundle
 hdiutil attach ./build_src.sparsebundle -mountpoint "$_src_dir" -nobrowse -noverify -noautoopen -noautofsck
+sudo df -h
+sudo du -hs "$_src_dir"
 
 # mdutil -i off ./build_src.sparsebundle # does not seem to work on macOS 11
 rm -rfv ./build_src.sparsebundle/.{,_.}{fseventsd,Spotlight-V*,Trashes} || true
