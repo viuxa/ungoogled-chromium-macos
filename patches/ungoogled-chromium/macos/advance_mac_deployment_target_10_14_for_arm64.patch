@@ -1,6 +1,6 @@
 --- a/build/config/mac/mac_sdk.gni
 +++ b/build/config/mac/mac_sdk.gni
-@@ -18,7 +18,7 @@ declare_args() {
+@@ -19,7 +19,7 @@ declare_args() {
    # additional code changes are required to be compliant with the availability
    # rules.
    # Must be of the form x.x.x for Info.plist files.
