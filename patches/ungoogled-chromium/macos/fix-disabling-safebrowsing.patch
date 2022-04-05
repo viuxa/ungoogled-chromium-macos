@@ -258,7 +258,7 @@
  }
 --- a/chrome/test/BUILD.gn
 +++ b/chrome/test/BUILD.gn
-@@ -5822,9 +5822,6 @@ test("unit_tests") {
+@@ -5823,9 +5823,6 @@ test("unit_tests") {
        "//chrome/app_shim",
        "//chrome/browser/apps/app_shim",
        "//chrome/common/notifications",
