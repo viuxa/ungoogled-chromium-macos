@@ -9,7 +9,7 @@ author: Michael Gilbert <mgilbert@debian.org>
  
 -  if (result >= 0 && result < static_cast<int>(std::size(stack_buf))) {
 +  // if (result >= 0 && result < static_cast<int>(std::size(stack_buf))) {
-+  int mem_length = static_cast<int>(base::size(stack_buf));
++  int mem_length = std::size(stack_buf);
 +  if (result >= 0 && result < mem_length) {
      // It fit.
      dst->append(stack_buf, result);
