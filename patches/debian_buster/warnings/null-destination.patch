@@ -3,11 +3,12 @@ author: Michael Gilbert <mgilbert@debian.org>
 
 --- a/base/strings/stringprintf.cc
 +++ b/base/strings/stringprintf.cc
-@@ -67,14 +67,14 @@ static void StringAppendVT(std::basic_st
-   int result = vsnprintfT(stack_buf, base::size(stack_buf), format, ap_copy);
+@@ -66,14 +66,16 @@ static void StringAppendVT(std::basic_st
+   int result = vsnprintfT(stack_buf, std::size(stack_buf), format, ap_copy);
    va_end(ap_copy);
  
--  if (result >= 0 && result < static_cast<int>(base::size(stack_buf))) {
+-  if (result >= 0 && result < static_cast<int>(std::size(stack_buf))) {
++  // if (result >= 0 && result < static_cast<int>(std::size(stack_buf))) {
 +  int mem_length = static_cast<int>(base::size(stack_buf));
 +  if (result >= 0 && result < mem_length) {
      // It fit.
@@ -16,7 +17,8 @@ author: Michael Gilbert <mgilbert@debian.org>
    }
  
    // Repeatedly increase buffer size until it fits.
--  int mem_length = base::size(stack_buf);
+-  int mem_length = std::size(stack_buf);
++  // int mem_length = std::size(stack_buf);
    while (true) {
      if (result < 0) {
  #if BUILDFLAG(IS_WIN)
