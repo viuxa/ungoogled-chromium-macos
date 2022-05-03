@@ -2,14 +2,11 @@
 
 --- a/services/preferences/tracked/device_id_mac.cc
 +++ b/services/preferences/tracked/device_id_mac.cc
-@@ -6,12 +6,17 @@
- 
- #include <IOKit/IOKitLib.h>
- 
-+#include "base/command_line.h"
+@@ -9,9 +9,14 @@
  #include "base/mac/foundation_util.h"
  #include "base/mac/scoped_cftyperef.h"
  #include "base/mac/scoped_ioobject.h"
++#include "base/command_line.h"
  #include "base/strings/sys_string_conversions.h"
  
  MachineIdStatus GetDeterministicMachineSpecificId(std::string* machine_id) {
@@ -20,18 +17,16 @@
    base::mac::ScopedIOObject<io_service_t> platform_expert(
        IOServiceGetMatchingService(kIOMasterPortDefault,
                                    IOServiceMatching("IOPlatformExpertDevice")));
-
 --- a/components/metrics/machine_id_provider_nonwin.cc
 +++ b/components/metrics/machine_id_provider_nonwin.cc
-@@ -6,6 +6,7 @@
- 
+@@ -7,18 +7,27 @@
  #include <stdint.h>
  
-+#include "base/command_line.h"
  #include "base/check.h"
++#include "base/command_line.h"
  #include "base/system/sys_info.h"
  
-@@ -13,12 +14,20 @@ namespace metrics {
+ namespace metrics {
  
  // Checks if hardware model name is available.
  bool MachineIdProvider::HasId() {
@@ -51,3 +46,4 @@
 +
    // Gets hardware model name. (e.g. 'Macbook Pro 16,1', 'iPhone 9,3')
    std::string hardware_model_name = base::SysInfo::HardwareModelName();
+ 
