@@ -1,28 +1,11 @@
 # Disable machine ID generation on Mac
 
---- a/services/preferences/tracked/device_id_mac.cc
-+++ b/services/preferences/tracked/device_id_mac.cc
-@@ -9,9 +9,14 @@
- #include "base/mac/foundation_util.h"
- #include "base/mac/scoped_cftyperef.h"
- #include "base/mac/scoped_ioobject.h"
-+#include "base/command_line.h"
- #include "base/strings/sys_string_conversions.h"
- 
- MachineIdStatus GetDeterministicMachineSpecificId(std::string* machine_id) {
-+  if (base::CommandLine::ForCurrentProcess()->HasSwitch("disable-machine-id")) {
-+    return MachineIdStatus::NOT_IMPLEMENTED;
-+  }
-+
-   base::mac::ScopedIOObject<io_service_t> platform_expert(
-       IOServiceGetMatchingService(kIOMasterPortDefault,
-                                   IOServiceMatching("IOPlatformExpertDevice")));
 --- a/components/metrics/machine_id_provider_nonwin.cc
 +++ b/components/metrics/machine_id_provider_nonwin.cc
-@@ -7,18 +7,27 @@
+@@ -6,18 +6,27 @@
+ 
  #include <stdint.h>
  
- #include "base/check.h"
 +#include "base/command_line.h"
  #include "base/system/sys_info.h"
  
@@ -47,3 +30,20 @@
    // Gets hardware model name. (e.g. 'Macbook Pro 16,1', 'iPhone 9,3')
    std::string hardware_model_name = base::SysInfo::HardwareModelName();
  
+--- a/services/preferences/tracked/device_id_mac.cc
++++ b/services/preferences/tracked/device_id_mac.cc
+@@ -9,9 +9,14 @@
+ #include "base/mac/foundation_util.h"
+ #include "base/mac/scoped_cftyperef.h"
+ #include "base/mac/scoped_ioobject.h"
++#include "base/command_line.h"
+ #include "base/strings/sys_string_conversions.h"
+ 
+ MachineIdStatus GetDeterministicMachineSpecificId(std::string* machine_id) {
++  if (base::CommandLine::ForCurrentProcess()->HasSwitch("disable-machine-id")) {
++    return MachineIdStatus::NOT_IMPLEMENTED;
++  }
++
+   base::mac::ScopedIOObject<io_service_t> platform_expert(
+       IOServiceGetMatchingService(kIOMasterPortDefault,
+                                   IOServiceMatching("IOPlatformExpertDevice")));
