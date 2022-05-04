@@ -2,27 +2,24 @@
 
 --- a/components/os_crypt/os_crypt_mac.mm
 +++ b/components/os_crypt/os_crypt_mac.mm
-@@ -174,6 +174,11 @@ bool IsEncryptionAvailable() {
+@@ -179,6 +179,10 @@ bool IsEncryptionAvailable() {
+     return true;
+   }
  
- bool OSCryptImpl::EncryptString(const std::string& plaintext,
-                             std::string* ciphertext) {
 +  if (base::CommandLine::ForCurrentProcess()->HasSwitch("disable-encryption")) {
-+    *ciphertext = plaintext;
 +    return true;
 +  }
 +
-   if (plaintext.empty()) {
-     *ciphertext = std::string();
-     return true;
-@@ -198,6 +203,11 @@ bool IsEncryptionAvailable() {
+   crypto::SymmetricKey* encryption_key = GetEncryptionKey();
+   if (!encryption_key)
+     return false;
+@@ -218,6 +222,9 @@ bool IsEncryptionAvailable() {
+       ciphertext.substr(strlen(kEncryptionVersionPrefix));
  
- bool OSCryptImpl::DecryptString(const std::string& ciphertext,
-                             std::string* plaintext) {
+   crypto::SymmetricKey* encryption_key = GetEncryptionKey();
 +  if (base::CommandLine::ForCurrentProcess()->HasSwitch("disable-encryption")) {
-+    *ciphertext = plaintext;
 +    return true;
 +  }
-+
-   if (ciphertext.empty()) {
-     *plaintext = std::string();
-     return true;
+   if (!encryption_key) {
+     VLOG(1) << "Decryption failed: could not get the key";
+     return false;
