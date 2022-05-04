@@ -1,0 +1,108 @@
+# Disable encryption of cookies, passwords, settings... on Mac.
+
+--- a/components/os_crypt/os_crypt_mac.mm
++++ b/components/os_crypt/os_crypt_mac.mm
+@@ -111,15 +111,35 @@
+ 
+ namespace OSCrypt {
+ bool EncryptString16(const std::u16string& plaintext, std::string* ciphertext) {
++  if (base::CommandLine::ForCurrentProcess()->HasSwitch("disable-encryption")) {
++    *ciphertext = plaintext;
++    return true;
++  }
++
+   return OSCryptImpl::EncryptString16(plaintext, ciphertext);
+ }
+ bool DecryptString16(const std::string& ciphertext, std::u16string* plaintext) {
++  if (base::CommandLine::ForCurrentProcess()->HasSwitch("disable-encryption")) {
++    *ciphertext = plaintext;
++    return true;
++  }
++
+   return OSCryptImpl::DecryptString16(ciphertext, plaintext);
+ }
+ bool EncryptString(const std::string& plaintext, std::string* ciphertext) {
++  if (base::CommandLine::ForCurrentProcess()->HasSwitch("disable-encryption")) {
++    *ciphertext = plaintext;
++    return true;
++  }
++
+   return OSCryptImpl::EncryptString(plaintext, ciphertext);
+ }
+ bool DecryptString(const std::string& ciphertext, std::string* plaintext) {
++  if (base::CommandLine::ForCurrentProcess()->HasSwitch("disable-encryption")) {
++    *ciphertext = plaintext;
++    return true;
++  }
++
+   return OSCryptImpl::DecryptString(ciphertext, plaintext);
+ }
+ void UseMockKeychainForTesting(bool use_mock) {
+@@ -135,6 +155,10 @@ void SetRawEncryptionKey(const std::string& key) {
+   OSCryptImpl::SetRawEncryptionKey(key);
+ }
+ bool IsEncryptionAvailable() {
++  if (base::CommandLine::ForCurrentProcess()->HasSwitch("disable-encryption-check")) {
++    return true;
++  }
++
+   return OSCryptImpl::IsEncryptionAvailable();
+ }
+ }  // namespace OSCrypt
+@@ -159,11 +183,21 @@ bool IsEncryptionAvailable() {
+ 
+ bool OSCryptImpl::EncryptString16(const std::u16string& plaintext,
+                               std::string* ciphertext) {
++  if (base::CommandLine::ForCurrentProcess()->HasSwitch("disable-encryption")) {
++    *ciphertext = plaintext;
++    return true;
++  }
++
+   return EncryptString(base::UTF16ToUTF8(plaintext), ciphertext);
+ }
+ 
+ bool OSCryptImpl::DecryptString16(const std::string& ciphertext,
+                               std::u16string* plaintext) {
++  if (base::CommandLine::ForCurrentProcess()->HasSwitch("disable-encryption")) {
++    *ciphertext = plaintext;
++    return true;
++  }
++
+   std::string utf8;
+   if (!DecryptString(ciphertext, &utf8))
+     return false;
+@@ -174,6 +208,11 @@ bool IsEncryptionAvailable() {
+ 
+ bool OSCryptImpl::EncryptString(const std::string& plaintext,
+                             std::string* ciphertext) {
++  if (base::CommandLine::ForCurrentProcess()->HasSwitch("disable-encryption")) {
++    *ciphertext = plaintext;
++    return true;
++  }
++
+   if (plaintext.empty()) {
+     *ciphertext = std::string();
+     return true;
+@@ -198,6 +237,11 @@ bool IsEncryptionAvailable() {
+ 
+ bool OSCryptImpl::DecryptString(const std::string& ciphertext,
+                             std::string* plaintext) {
++  if (base::CommandLine::ForCurrentProcess()->HasSwitch("disable-encryption")) {
++    *ciphertext = plaintext;
++    return true;
++  }
++
+   if (ciphertext.empty()) {
+     *plaintext = std::string();
+     return true;
+@@ -237,6 +281,10 @@ bool IsEncryptionAvailable() {
+ }
+ 
+ bool OSCryptImpl::IsEncryptionAvailable() {
++  if (base::CommandLine::ForCurrentProcess()->HasSwitch("disable-encryption-check")) {
++    return true;
++  }
++
+   return GetEncryptionKey() != nullptr;
+ }
+ 
