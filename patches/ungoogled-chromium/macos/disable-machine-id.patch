@@ -1,8 +1,8 @@
-# Disable machine ID generation on Mac
+# Disable machine ID generation on NonWin.
 
 --- a/components/metrics/machine_id_provider_nonwin.cc
 +++ b/components/metrics/machine_id_provider_nonwin.cc
-@@ -6,18 +6,27 @@
+@@ -6,18 +6,26 @@
  
  #include <stdint.h>
  
@@ -16,7 +16,6 @@
 +  if (base::CommandLine::ForCurrentProcess()->HasSwitch("disable-machine-id")) {
 +    return false;
 +  }
-+
    return !base::SysInfo::HardwareModelName().empty();
  }
  
@@ -32,18 +31,36 @@
  
 --- a/services/preferences/tracked/device_id_mac.cc
 +++ b/services/preferences/tracked/device_id_mac.cc
-@@ -9,9 +9,14 @@
+@@ -6,15 +6,23 @@
+ 
+ #include <IOKit/IOKitLib.h>
+ 
++#include "base/command_line.h"
  #include "base/mac/foundation_util.h"
  #include "base/mac/scoped_cftyperef.h"
  #include "base/mac/scoped_ioobject.h"
-+#include "base/command_line.h"
  #include "base/strings/sys_string_conversions.h"
  
  MachineIdStatus GetDeterministicMachineSpecificId(std::string* machine_id) {
-+  if (base::CommandLine::ForCurrentProcess()->HasSwitch("disable-machine-id")) {
++  if (base::CommandLine::ForCurrentProcess()->HasSwitch("disable-device-id")) {
 +    return MachineIdStatus::NOT_IMPLEMENTED;
 +  }
 +
    base::mac::ScopedIOObject<io_service_t> platform_expert(
        IOServiceGetMatchingService(kIOMasterPortDefault,
                                    IOServiceMatching("IOPlatformExpertDevice")));
++  if (base::CommandLine::ForCurrentProcess()->HasSwitch("disable-device-id2")) {
++    return MachineIdStatus::NOT_IMPLEMENTED;
++  }
+   if (!platform_expert.get())
+     return MachineIdStatus::FAILURE;
+ 
+@@ -28,5 +36,8 @@ MachineIdStatus GetDeterministicMachineSpecificId(std::string* machine_id) {
+     return MachineIdStatus::FAILURE;
+ 
+   *machine_id = base::SysCFStringRefToUTF8(uuid_string);
++  if (base::CommandLine::ForCurrentProcess()->HasSwitch("disable-device-id3")) {
++    return MachineIdStatus::NOT_IMPLEMENTED;
++  }
+   return MachineIdStatus::SUCCESS;
+ }
