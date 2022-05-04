@@ -7,8 +7,8 @@
  bool OSCryptImpl::EncryptString(const std::string& plaintext,
                              std::string* ciphertext) {
 +  if (base::CommandLine::ForCurrentProcess()->HasSwitch("disable-encryption")) {
-+      *ciphertext = plaintext;
-+      return true;
++    *ciphertext = plaintext;
++    return true;
 +  }
 +
    if (plaintext.empty()) {
@@ -19,8 +19,8 @@
  bool OSCryptImpl::DecryptString(const std::string& ciphertext,
                              std::string* plaintext) {
 +  if (base::CommandLine::ForCurrentProcess()->HasSwitch("disable-encryption")) {
-+      *ciphertext = plaintext;
-+      return true;
++    *ciphertext = plaintext;
++    return true;
 +  }
 +
    if (ciphertext.empty()) {
